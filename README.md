@@ -23,7 +23,7 @@
     * There can be multiple Input DR Layers, we have used 2 layers as shown in the paper.
 * **Green** Finally output of `Fuzzy Rule Layer` & `Input DR Layer` are fused together.
 * Now, the fused output is passed through `Fusion DR Layer`. `Note: These can be multiple layers, we used single layer in this case`. Following formula is used to compute these layers:
-    > ![Input DR]
+    > ![Fusion DR]
 * **Red** The Final `Task Driven Layer` is the classification layer. That classifies using softmax function that is as follows:
     > ![Task Driven]
 * After Classification loss is calculated using mean-square-loss `mse`.
@@ -75,5 +75,6 @@ example usage:
 [Membership Function]: ./formulas/MembershipFunction.png
 [Fuzzy Rule]: ./formulas/FuzzyRuleLayer.png
 [Input DR]: ./formulas/InputDR.png
+[Fusion DR]: ./formulas/FusionDR.png
 [Task Driven]: ./formulas/TaskDriven.png
 [MSE]: ./formulas/MSE.png
