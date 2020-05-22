@@ -4,22 +4,22 @@ from tensorflow.keras.layers import Layer
 
 class FuzzyLayer(Layer):
 
-    def __init__(self, output_dim, initializer_centers=None, initializer_sigmas=None, **kwargs):
+    def __init__(self, output_dim, initialiser_centers=None, initialiser_sigmas=None, **kwargs):
         if 'input_shape' not in kwargs and 'input_dim' in kwargs:
             kwargs['input_shape'] = (kwargs.pop('input_dim'),)
         self.output_dim = output_dim
-        self.initializer_centers = initializer_centers
-        self.initializer_sigmas = initializer_sigmas
+        self.initialiser_centers = initialiser_centers
+        self.initialiser_sigmas = initialiser_sigmas
         super(FuzzyLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
         self.fuzzy_degree = self.add_weight(name='fuzzy_degree',
                                             shape=(input_shape[-1], self.output_dim),
-                                            initializer=self.initializer_centers if self.initializer_centers is not None else 'uniform',
+                                            initializer=self.initialiser_centers if self.initialiser_centers is not None else 'uniform',
                                             trainable=True)
         self.sigma = self.add_weight(name='sigma',
                                      shape=(input_shape[-1], self.output_dim),
-                                     initializer=self.initializer_sigmas if self.initializer_sigmas is not None else 'ones',
+                                     initializer=self.initialiser_sigmas if self.initialiser_sigmas is not None else 'ones',
                                      trainable=True)
         super(FuzzyLayer, self).build(input_shape)
 

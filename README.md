@@ -10,7 +10,7 @@
 
 ## 1. Brief Description
 
-* This is an implementation of Hierarchical Fused Deep Neural Network Model used for famous CIFAR-10 categorization purpose.
+* This is an implementation of Hierarchical Fused Deep Neural Network Model used for famous CIFAR-10 categorisation purpose.
 
 ## 2. Project Workflow
 * Input layer starts with input vectors of an image of dimension (32x32x3), In this case there can be 32 vectors of size 32 for grey scale image and size 96 for coloured image.

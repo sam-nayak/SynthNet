@@ -33,7 +33,7 @@ optional arguments:
   --hide-graph          Hides the graph of results displayed via matplotlib
 
 example usage:
-    run.py --color-image --epoch 200 --batch-size 8 --learning-rate 0.001
+    run.py --epoch 100 --batch-size 8 --learning-rate 0.001
            --membership-layer-units 256 --first-dr-layer-units 128
            --second-dr-layer-units 64
 """
@@ -54,9 +54,11 @@ from tensorflow.keras.optimizers import Adam
 
 from FuzzyLayer import FuzzyLayer
 
+CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+
 
 # plot diagnostic learning curves
-def summarize_diagnostics(history):
+def summarise_diagnostics(history):
     # plot accuracy
     pyplot.subplot(211)
     pyplot.title('Classification Accuracy')
@@ -69,7 +71,7 @@ def summarize_diagnostics(history):
     pyplot.title('Mean Squared Error Loss')
     pyplot.plot(history.history['loss'], color='orange', label='train')
     pyplot.xlabel('Epoch')
-    pyplot.ylabel('Accuracy')
+    pyplot.ylabel('Loss')
 
     pyplot.tight_layout()
     pyplot.show()
@@ -116,7 +118,7 @@ def pre_process_data(train, test, keep_rgb=False):
     return x_train_multi_input, x_test_multi_input
 
 
-def prepare_model(input_len, input_shape, parameters):
+def prepare_model(input_len, input_shape, num_classes, parameters):
     fuzz_membership_layer = []
     model_inputs = []
     for vector in range(input_len):
@@ -138,7 +140,7 @@ def prepare_model(input_len, input_shape, parameters):
     fusion_dr_layer = Dense(parameters.fusion_dr_layer_units, activation='sigmoid')(fusion_layer)
 
     # Task Driven Layer
-    out = Dense(10, activation='softmax')(fusion_dr_layer)
+    out = Dense(num_classes, activation='softmax')(fusion_dr_layer)
     model = Model(model_inputs, out)
     # compile model
     opt = Adam(learning_rate=parameters.learning_rate)
@@ -148,8 +150,8 @@ def prepare_model(input_len, input_shape, parameters):
 
 def parse_cli_parameters():
     parser = argparse.ArgumentParser(description="FuzzyDNN on CIFAR-10")
-    parser.add_argument('--learning-rate', dest='learning_rate', default=10 ** -4, type=float,
-                        help='Learning Rate of your classifier. Default 0.0001')
+    parser.add_argument('--learning-rate', dest='learning_rate', default=10 ** -3, type=float,
+                        help='Learning Rate of your classifier. Default 0.001')
     parser.add_argument('--epoch', dest='epochs', default=100, type=int,
                         help='Number of times you want to train your data. Default 100')
     parser.add_argument('--batch-size', dest='batch_size', type=int, default=16,
@@ -180,11 +182,13 @@ def main():
     X_train, y_train, X_test, y_test = load_dataset()
     X_train, X_test = pre_process_data(X_train, X_test, keep_rgb=cli_parameters.is_colour_image)
 
+    # Defines the number of classes/categories and output vectors
+    num_classes = y_test.shape[-1]
     # Defines the number of input vectors
     input_length = len(X_train)
     # Defines the shape of input layer
     input_shape = X_train[0].shape[-1]
-    model = prepare_model(input_length, input_shape, cli_parameters)
+    model = prepare_model(input_length, input_shape, num_classes, cli_parameters)
     # fit model
     history = model.fit(X_train, y_train, epochs=cli_parameters.epochs, batch_size=cli_parameters.batch_size)
     print('Evaluating the model')
@@ -193,7 +197,7 @@ def main():
     print('Model Evaluation Accuracy: {}'.format(acc))
 
     if not cli_parameters.should_hide_graph:
-        summarize_diagnostics(history)
+        summarise_diagnostics(history)
 
 
 if __name__ == '__main__':
