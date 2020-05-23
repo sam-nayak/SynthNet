@@ -69,7 +69,7 @@ optional arguments:
 
 example usage:
   run.py
-  run.py --color-image --epoch 200 --batch-size 8 --learning-rate 0.001 --membership-layer-units 256 --first-dr-layer-units 128 --second-dr-layer-units 64
+  run.py --epoch 100 --batch-size 8 --learning-rate 0.001 --membership-layer-units 256 --first-dr-layer-units 128 --second-dr-layer-units 64
 ```
 
 [Membership Function]: ./formulas/MembershipFunction.png
