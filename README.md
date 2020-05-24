@@ -1,16 +1,19 @@
-# Fuzzy Deep Neural Networks
+# SynthNet
 
-1. Membership Function Layer
-2. Fuzzy Rule Layer
-3. Input DR Layers
-4. Fusion Layer
-5. Fusion DR Layers
-6. Task Driven Layer
+[![DOI](https://zenodo.org/badge/265878050.svg)](https://zenodo.org/badge/latestdoi/265878050)
 
+The model is separated into 7 different layers, these being:
+1. Input layer
+2. Membership Function Layer
+3. Fuzzy Rule Layer
+4. Input DR Layers
+5. Fusion Layer
+6. Fusion DR Layers
+7. Task Driven Layer (Output Layer)
 
 ## 1. Brief Description
 
-* This is an implementation of Hierarchical Fused Deep Neural Network Model used for famous CIFAR-10 categorisation purpose.
+This is an implementation of a hierarchical fused deep neural network model proposed by Deng et al. (2007), used on the famous CIFAR-10 dataset for categorisation purposes.
 
 ## 2. Project Workflow
 * Input layer starts with input vectors of an image of dimension (32x32x3), In this case there can be 32 vectors of size 32 for grey scale image and size 96 for coloured image.
@@ -78,3 +81,7 @@ example usage:
 [Fusion DR]: ./formulas/FusionDR.png
 [Task Driven]: ./formulas/TaskDriven.png
 [MSE]: ./formulas/MSE.png
+
+## References
+
+Deng, Y., Ren, Z., Kong, Y., Bao, F., & Dai, Q. (2017). A Hierarchical Fused Fuzzy Deep Neural Network for Data Classification. IEEE Transactions On Fuzzy Systems, 25(4), 1006-1012. doi: 10.1109/tfuzz.2016.2574915
